@@ -1,40 +1,16 @@
 package ru.job4j.grabber.model;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Post {
-    /**
-     * Идентификатор вакансии (берется из нашей базы данных).
-     */
-    private long id;
-
-    /**
-     * Название вакансии.
-     */
-    private String title;
-
-    /**
-     * Ссылка на описание вакансии.
-     */
-    private String link;
-
-    /**
-     * Описание вакансии.
-     */
-    private String description;
-
-    /**
-     * Дата создания вакансии. Храниться в миллисекундах. В базе должно быть поле Timestamp without time zone.
-     */
-    private Long time;
-
-    public Post(long id, String title, String link, String description, Long time) {
-        this.id = id;
-        this.title = title;
-        this.link = link;
-        this.description = description;
-        this.time = time;
-    }
+/**
+ * @param id          Идентификатор вакансии в БД.
+ * @param title       Название вакансии.
+ * @param link        Ссылка на описание вакансии.
+ * @param description Описание вакансии.
+ * @param created     Дата создания вакансии.
+ */
+public record Post(long id, String title, String link, String description, LocalDateTime created) {
 
     @Override
     public boolean equals(Object o) {
@@ -48,56 +24,5 @@ public class Post {
     @Override
     public int hashCode() {
         return Objects.hash(link);
-    }
-
-    @Override
-    public String toString() {
-        return "Post{"
-                + "id=" + id
-                + ", title=" + title
-                + ", link=" + link
-                + ", description=" + description
-                + ", time=" + time
-                + "}";
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getTime() {
-        return time;
-    }
-
-    public void setTime(Long time) {
-        this.time = time;
     }
 }

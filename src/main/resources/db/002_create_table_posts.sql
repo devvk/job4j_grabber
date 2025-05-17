@@ -1,0 +1,7 @@
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    link VARCHAR(200) UNIQUE NOT NULL,
+    description TEXT NOT NULL,
+    created TIMESTAMP NOT NULL DEFAULT NOW()
+);
