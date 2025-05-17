@@ -14,7 +14,7 @@ import static org.quartz.TriggerBuilder.newTrigger;
  * Выполнение задач по расписанию.
  */
 public class SchedulerManager {
-    private static final Logger log = LoggerFactory.getLogger(SchedulerManager.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SchedulerManager.class);
     private Scheduler scheduler;
 
     public void init() {
@@ -22,7 +22,7 @@ public class SchedulerManager {
             scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
         } catch (SchedulerException e) {
-            log.error("When init scheduler", e);
+            LOG.error("When init scheduler", e);
         }
     }
 
@@ -45,7 +45,7 @@ public class SchedulerManager {
 
             scheduler.scheduleJob(job, trigger);
         } catch (SchedulerException e) {
-            log.error("When init job", e);
+            LOG.error("When init job", e);
         }
     }
 
@@ -54,7 +54,7 @@ public class SchedulerManager {
             try {
                 scheduler.shutdown();
             } catch (SchedulerException e) {
-                log.error("When shutdown scheduler", e);
+                LOG.error("When shutdown scheduler", e);
             }
         }
     }

@@ -12,14 +12,14 @@ import java.util.Properties;
  * - настройки соединения с базой данных
  */
 public class Config {
-    private static final Logger log = LoggerFactory.getLogger(Config.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Config.class);
     private final Properties properties = new Properties();
 
     public void load(String file) {
         try (var input = Config.class.getClassLoader().getResourceAsStream(file)) {
             properties.load(input);
         } catch (IOException e) {
-            log.error("Failed to load file: {}", file, e);
+            LOG.error("Failed to load file: {}", file, e);
         }
     }
 

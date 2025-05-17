@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class JdbcStore implements Store, AutoCloseable {
-    private static final Logger log = LoggerFactory.getLogger(JdbcStore.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcStore.class);
     private final Connection connection;
 
     public JdbcStore(Config config) {
@@ -51,7 +51,7 @@ public class JdbcStore implements Store, AutoCloseable {
             ps.setTimestamp(4, Timestamp.valueOf(post.created()));
             ps.executeUpdate();
         } catch (SQLException e) {
-            log.error("Failed to save post. SQL: {} | params: [{}, {}, {}, {}]",
+            LOG.error("Failed to save post. SQL: {} | params: [{}, {}, {}, {}]",
                     sql, post.title(), post.link(), post.description(), post.created(), e);
         }
     }
@@ -66,7 +66,7 @@ public class JdbcStore implements Store, AutoCloseable {
                 posts.add(createPost(resultSet));
             }
         } catch (SQLException e) {
-            log.error("Failed to get all posts. SQL: {}", sql, e);
+            LOG.error("Failed to get all posts. SQL: {}", sql, e);
         }
         return posts;
     }
@@ -100,7 +100,7 @@ public class JdbcStore implements Store, AutoCloseable {
                 }
             }
         } catch (SQLException e) {
-            log.error("Failed to find post by ID: {}. SQL: {}", id, sql, e);
+            LOG.error("Failed to find post by ID: {}. SQL: {}", id, sql, e);
         }
         return post;
     }
