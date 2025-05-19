@@ -6,7 +6,7 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.grabber.model.Post;
-import ru.job4j.grabber.utils.HabrCareerDateTimeParser;
+import ru.job4j.grabber.utils.DateTimeParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +18,12 @@ public class HabrCareerParse implements Parse {
     private static final String PREFIX = "/vacancies?page=";
     private static final String SUFFIX = "&q=Java developer&type=all";
     private static final int PAGES_TO_PARSE = 5;
+
+    private final DateTimeParser dateTimeParser;
+
+    public HabrCareerParse(DateTimeParser dateTimeParser) {
+        this.dateTimeParser = dateTimeParser;
+    }
 
     @Override
     public List<Post> fetch() {
@@ -36,7 +42,7 @@ public class HabrCareerParse implements Parse {
                     post.setTitle(title);
                     post.setLink(link);
                     post.setDescription(description);
-                    post.setCreated(new HabrCareerDateTimeParser().parse(date));
+                    post.setCreated(dateTimeParser.parse(date));
                     result.add(post);
                 });
             } catch (IOException e) {
