@@ -30,7 +30,7 @@ public class HabrCareerParse implements Parse {
                 vacancies.forEach(vacancy -> {
                     String title = vacancy.select(".vacancy-card__title").text();
                     String link = vacancy.select(".vacancy-card__title-link").attr("abs:href");
-                    String description = vacancy.select(".vacancy-card__skills").text();
+                    String description = retrieveDescription(link);
                     String date = vacancy.select(".basic-date").attr("datetime");
                     Post post = new Post();
                     post.setTitle(title);
@@ -44,6 +44,17 @@ public class HabrCareerParse implements Parse {
             }
         }
         return result;
+    }
+
+    private String retrieveDescription(String link) {
+        String description = "";
+        try {
+            Document doc = Jsoup.connect(link).get();
+            description = doc.select(".faded-content__container").text();
+        } catch (IOException e) {
+            LOG.error("Failed to fetch. LINK: {}", link, e);
+        }
+        return description;
     }
 
     private String getPageLink(int page) {
