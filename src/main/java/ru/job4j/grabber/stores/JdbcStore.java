@@ -45,14 +45,14 @@ public class JdbcStore implements Store, AutoCloseable {
     public void save(Post post) {
         String sql = "INSERT INTO posts (title, link, description, created) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, post.title());
-            ps.setString(2, post.link());
-            ps.setString(3, post.description());
-            ps.setTimestamp(4, Timestamp.valueOf(post.created()));
+            ps.setString(1, post.getTitle());
+            ps.setString(2, post.getLink());
+            ps.setString(3, post.getDescription());
+            ps.setTimestamp(4, Timestamp.valueOf(post.getCreated()));
             ps.executeUpdate();
         } catch (SQLException e) {
             LOG.error("Failed to save post. SQL: {} | params: [{}, {}, {}, {}]",
-                    sql, post.title(), post.link(), post.description(), post.created(), e);
+                    sql, post.getTitle(), post.getLink(), post.getDescription(), post.getCreated(), e);
         }
     }
 

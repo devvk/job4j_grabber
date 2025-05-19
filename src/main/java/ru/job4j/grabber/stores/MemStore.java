@@ -9,7 +9,7 @@ public class MemStore implements Store {
 
     @Override
     public void save(Post post) {
-        mem.put(post.id(), post);
+        mem.put(post.getId(), post);
     }
 
     @Override
