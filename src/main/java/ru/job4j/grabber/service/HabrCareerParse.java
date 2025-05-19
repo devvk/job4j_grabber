@@ -6,10 +6,9 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.grabber.model.Post;
+import ru.job4j.grabber.utils.HabrCareerDateTimeParser;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +34,7 @@ public class HabrCareerParse implements Parse {
                 post.setTitle(title);
                 post.setLink(link);
                 post.setDescription(description);
-                OffsetDateTime offsetDateTime = OffsetDateTime.parse(date); // с учётом смещения
-                LocalDateTime localDateTime = offsetDateTime.toLocalDateTime(); // без смещения
-                post.setCreated(localDateTime);
+                post.setCreated(new HabrCareerDateTimeParser().parse(date));
                 result.add(post);
             });
         } catch (IOException e) {
