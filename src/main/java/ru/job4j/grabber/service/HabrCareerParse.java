@@ -17,28 +17,31 @@ public class HabrCareerParse implements Parse {
     private static final String SOURCE_LINK = "https://career.habr.com";
     private static final String PREFIX = "/vacancies?page=";
     private static final String SUFFIX = "&q=Java developer&type=all";
+    private static final int PAGES_TO_PARSE = 5;
 
     @Override
     public List<Post> fetch() {
         List<Post> result = new ArrayList<>();
-        String fullLink = getPageLink(1);
-        try {
-            Document doc = Jsoup.connect(fullLink).get();
-            Elements vacancies = doc.select(".vacancy-card");
-            vacancies.forEach(vacancy -> {
-                String title = vacancy.select(".vacancy-card__title").text();
-                String link = vacancy.select(".vacancy-card__title-link").attr("abs:href");
-                String description = vacancy.select(".vacancy-card__skills").text();
-                String date = vacancy.select(".basic-date").attr("datetime");
-                Post post = new Post();
-                post.setTitle(title);
-                post.setLink(link);
-                post.setDescription(description);
-                post.setCreated(new HabrCareerDateTimeParser().parse(date));
-                result.add(post);
-            });
-        } catch (IOException e) {
-            LOG.error("Failed to fetch. LINK: {}", fullLink, e);
+        for (int i = 1; i <= PAGES_TO_PARSE; i++) {
+            String fullLink = getPageLink(i);
+            try {
+                Document doc = Jsoup.connect(fullLink).get();
+                Elements vacancies = doc.select(".vacancy-card");
+                vacancies.forEach(vacancy -> {
+                    String title = vacancy.select(".vacancy-card__title").text();
+                    String link = vacancy.select(".vacancy-card__title-link").attr("abs:href");
+                    String description = vacancy.select(".vacancy-card__skills").text();
+                    String date = vacancy.select(".basic-date").attr("datetime");
+                    Post post = new Post();
+                    post.setTitle(title);
+                    post.setLink(link);
+                    post.setDescription(description);
+                    post.setCreated(new HabrCareerDateTimeParser().parse(date));
+                    result.add(post);
+                });
+            } catch (IOException e) {
+                LOG.error("Failed to fetch. LINK: {}", fullLink, e);
+            }
         }
         return result;
     }
@@ -46,5 +49,4 @@ public class HabrCareerParse implements Parse {
     private String getPageLink(int page) {
         return "%s%s%d%s".formatted(SOURCE_LINK, PREFIX, page, SUFFIX);
     }
-
 }
