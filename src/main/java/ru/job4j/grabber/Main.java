@@ -27,7 +27,6 @@ public class Main {
                 store,
                 parser);
 
-
         startServer(Integer.parseInt(config.get("server.port")), store);
     }
 

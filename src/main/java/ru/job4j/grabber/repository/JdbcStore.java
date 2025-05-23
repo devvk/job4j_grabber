@@ -78,8 +78,6 @@ public class JdbcStore implements Store, AutoCloseable {
         } catch (SQLException e) {
             LOG.error("Failed to get all posts. SQL: {}", sql, e);
         }
-
-
         return posts;
     }
 
