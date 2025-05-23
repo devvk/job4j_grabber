@@ -3,6 +3,9 @@ package ru.job4j.grabber.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Модель данных, описывающую вакансию.
+ */
 public class Post {
 
     /**
@@ -16,7 +19,7 @@ public class Post {
     String title;
 
     /**
-     * Ссылка на описание вакансии.
+     * Ссылка на страницу с вакансией.
      */
     String link;
 
@@ -26,7 +29,7 @@ public class Post {
     String description;
 
     /**
-     * Дата создания вакансии.
+     * Дата и время публикации вакансии.
      */
     LocalDateTime created;
 
@@ -39,10 +42,6 @@ public class Post {
         this.link = link;
         this.description = description;
         this.created = created;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getTitle() {

@@ -1,9 +1,9 @@
-package ru.job4j.grabber.stores;
+package ru.job4j.grabber.repository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.job4j.grabber.model.Post;
-import ru.job4j.grabber.service.Config;
+import ru.job4j.grabber.utils.Config;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -41,6 +41,11 @@ public class JdbcStore implements Store, AutoCloseable {
         }
     }
 
+    /**
+     * Сохраняет вакансию в БД.
+     *
+     * @param post вакансия
+     */
     @Override
     public void save(Post post) {
         String sql = "INSERT INTO posts (title, link, description, created) VALUES (?, ?, ?, ?)";
@@ -56,6 +61,11 @@ public class JdbcStore implements Store, AutoCloseable {
         }
     }
 
+    /**
+     * Извлекает все вакансии из БД.
+     *
+     * @return список вакансий.
+     */
     @Override
     public List<Post> getAll() {
         List<Post> posts = new ArrayList<>();
@@ -68,6 +78,8 @@ public class JdbcStore implements Store, AutoCloseable {
         } catch (SQLException e) {
             LOG.error("Failed to get all posts. SQL: {}", sql, e);
         }
+
+
         return posts;
     }
 

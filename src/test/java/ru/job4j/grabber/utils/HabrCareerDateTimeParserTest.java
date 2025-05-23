@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class HabrCareerDateTimeParserTest {
+
     @Test
     public void shouldParseIsoOffsetDateTimeAndReturnLocalDateTime() {
         String input = "2025-05-19T15:50:14+03:00";

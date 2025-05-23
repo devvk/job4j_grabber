@@ -1,4 +1,4 @@
-package ru.job4j.grabber.service;
+package ru.job4j.grabber.parser;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,19 +12,47 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HabrCareerParse implements Parse {
-    private static final Logger LOG = LoggerFactory.getLogger(HabrCareerParse.class);
+/**
+ * Используется для парсинга вакансий с платформы career.habr.com.
+ */
+public class HabrCareerParser implements Parser {
+
+    /**
+     * Logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(HabrCareerParser.class);
+
+    /**
+     * Базовая ссылка на сайт.
+     */
     private static final String SOURCE_LINK = "https://career.habr.com";
+
+    /**
+     * Префикс для ссылок на страницы с вакансиями.
+     */
     private static final String PREFIX = "/vacancies?page=";
+
+    /**
+     * Параметры для фильтрации вакансий.
+     */
     private static final String SUFFIX = "&q=Java developer&type=all";
+
+    /**
+     * Количество страниц, которые нужно спарсить.
+     */
     private static final int PAGES_TO_PARSE = 5;
 
     private final DateTimeParser dateTimeParser;
 
-    public HabrCareerParse(DateTimeParser dateTimeParser) {
+    public HabrCareerParser(DateTimeParser dateTimeParser) {
         this.dateTimeParser = dateTimeParser;
     }
 
+    /**
+     * Загружает и обрабатывает HTML-страницы, извлекая данные о вакансиях.
+     *
+     * @return список вакансий.
+     */
     @Override
     public List<Post> fetch() {
         List<Post> result = new ArrayList<>();
